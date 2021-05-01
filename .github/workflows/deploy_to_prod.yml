@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: alinz/ssh-scp-action@master
-      - run: npm install
-      - uses: lannonbr/vsce-action@master
         with:
           key: ${{ secrets.PRODUCTION_SERVER_SSH_KEY }}
           host: kotusiewicz.com
