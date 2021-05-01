@@ -1,27 +1,19 @@
-name: Operations
-  uses: alinz/ssh-scp-action@master
-  env:
-    HELLO: cool
-    MESSAGE: hello world
-  with:
-    key: ${{ secrets.SSH_KEY }}
-    host: example.com
-    port: 22
-    user: john
-    # runs this on remove server
-    ssh_before: |
-      rm -rf sample1.dat sample2.dat
-      echo $HELLO
-      echo $MESSAGE
-      ls -lath
-
-    # then uploads these 2 files
-    scp: |
-      sample1.txt john@example.com:~/sample1.dat
-      sample2.txt john@example.com:~/sample2.dat
-
-    # then run these commands
-    ssh_after: |
-      echo $HELLO
-      echo $MESSAGE
-      ls -lath
+on:
+  push:
+    branches:
+      - master
+name: deploy to production
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: alinz/ssh-scp-action@master
+      - run: npm install
+      - uses: lannonbr/vsce-action@master
+        with:
+          key: ${{ secrets.PRODUCTION_SERVER_SSH_KEY }}
+          host: kotusiewicz.com
+          port: 22
+          user: john
+          scp: |
+            sample1.txt john@example.com:~/sample1.dat
