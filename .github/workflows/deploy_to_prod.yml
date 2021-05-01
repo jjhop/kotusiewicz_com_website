@@ -1,0 +1,26 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+uses: alinz/ssh-scp-action@master
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    with:
+      key: ${{ secrets.SSH_KEY }}
+      host: example.com
+      port: 22
+      user: john
+      scp: |
+        sample1.txt john@example.com:~/sample1.dat
+        sample2.txt john@example.com:~/sample2.dat
