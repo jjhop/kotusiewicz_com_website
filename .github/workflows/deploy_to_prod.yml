@@ -1,4 +1,4 @@
-- name: Operations
+name: Operations
   uses: alinz/ssh-scp-action@master
   env:
     HELLO: cool
